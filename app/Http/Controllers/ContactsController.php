@@ -9,6 +9,19 @@ use Illuminate\Support\Facades\Auth;
 class ContactsController extends Controller
 {
   
+
+   public function index()
+    {
+       
+        if(Auth::check()){
+        $contacts = Contact::where('user_id', Auth::user()->id)->get();
+        return view('contacts.index',['contacts' => $contacts]);
+       }
+       else{
+        return view('auth.login');
+       }
+    }
+
     public function create()
     {
         return view('contacts.create');
@@ -24,19 +37,17 @@ class ContactsController extends Controller
             $validatedData = $request->validate([
             'full_name' => 'required',
             'mobile_no' => 'required|numeric',
-            'email' => 'required|email',
+            'contact_email' => 'required|email',
            ]);
 
 
              $contact = new Contact;
-
+             $contact->user_id = Auth::user()->id;
              $contact->full_name = $validatedData['full_name'];
              $contact->mobile_no = $validatedData['mobile_no'];
-             $conract->email = $validatedData['email'];
-             $contact->user_id =Auth::user()->id;
-
+             $contact->contact_email = $validatedData['contact_email'];
             if($contact->save()){
-                return redirect()->route('contacts.show', ['user_id'=> $contact->id])
+                return redirect()->route('contacts.index', ['user_id'=> $contact->id])
                 ->with('success' , 'Contact created successfully');
             }
            
