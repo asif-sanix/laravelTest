@@ -47,7 +47,7 @@ class ContactsController extends Controller
              $contact->mobile_no = $validatedData['mobile_no'];
              $contact->contact_email = $validatedData['contact_email'];
             if($contact->save()){
-                return redirect()->route('contacts.index', ['user_id'=> $contact->id])
+                return redirect()->route('contacts.index')
                 ->with('success' , 'Contact created successfully');
             }
            

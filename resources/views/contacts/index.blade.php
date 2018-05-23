@@ -8,18 +8,18 @@
     <ul class="list-group">
        @foreach ($contacts as $contact)
          <li class="list-group-item"><div class="d-table"> <span class="d-table-cell text-left"><a href="/companies/{{$contact->id}}"> {{ $contact->full_name }}</a></span> <span class="d-table-cell text-center"> {{ $contact->mobile_no }} </span> <span class="d-table-cell text-center"> {{ $contact->contact_email }} </span> <span class="d-table-cell text-right"> Edit /  
-         	<a href="#"
+         	<a href="{{ route('contacts.destroy',[$contact->id]) }}"
                   onclick="
                   var result = confirm('Are you sure you wish to delete this Company? {{$contact->id}}');
                       if( result ){
                               event.preventDefault();
-                              document.getElementById('delete-form').submit();
+                              document.getElementById('delete-form-{{$contact->id}}').submit();
                       }
                           "
                           >
                   Delete
               </a>
-              <form id="delete-form" action="{{ route('contacts.destroy',[$contact->id]) }}" 
+              <form id="delete-form-{{$contact->id}}" action="{{ route('contacts.destroy',[$contact->id]) }}" 
                 method="POST" style="display: none;">
                         <input type="hidden" name="_method" value="delete">
                         {{ csrf_field() }}

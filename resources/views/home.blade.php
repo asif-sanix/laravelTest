@@ -15,6 +15,8 @@
                     @endif
 
                    <a href="/contacts/create">Add Contact</a>
+                   <a href="/contacts/">All Contact</a>
+
                 </div>
             </div>
         </div>
